@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
@@ -18,7 +18,7 @@ import Parallax from "/components/Parallax/Parallax.js";
 import styles from "/styles/jss/nextjs-material-kit/pages/landingPage.js";
 
 // Sections for this page
-import ProductSection from "/pages-sections/LandingPage-Sections/ProductSection.js";
+import Projects from "/pages-sections/LandingPage-Sections/Projects.js";
 import AboutMe from "/pages-sections/LandingPage-Sections/AboutMe.js";
 import WorkSection from "/pages-sections/LandingPage-Sections/WorkSection.js";
 import { css } from "goober";
@@ -32,7 +32,7 @@ const useStyles = makeStyles(styles);
 
 export default function LandingPage(props) {
   const [isDisplayed, setIsDisplayed] = useState(false)
-  console.log("🚀 ~ file: index.js ~ line 34 ~ LandingPage ~ isDisplayed, parent", isDisplayed)
+  const [elementsInViewport, setElementsInViewPort] = useState([])
   const classes = useStyles();
   const { ...rest } = props;
 
@@ -42,6 +42,23 @@ export default function LandingPage(props) {
       }, 300)
       return () => clearTimeout(timer)
   }, [])
+
+  const refAboutMe = useRef('')
+
+  useEffect(() => {
+     const observer = new IntersectionObserver((changes, observer) => {
+      for (const change of changes) {
+        console.log(change.time);               // Timestamp when the change occurred
+        console.log(change.rootBounds);         // Unclipped area of root
+        console.log(change.boundingClientRect); // target.getBoundingClientRect()
+        console.log(change.intersectionRect);   // boundingClientRect, clipped by its containing block ancestors, and intersected with rootBounds
+        console.log(change.intersectionRatio);  // Ratio of intersectionRect area to boundingClientRect area
+        console.log(change.target);             // the Element target
+      }
+    })
+    observer.observe(refAboutMe.current)
+    console.log(refAboutMe.current)
+  })
 
   return (
     <div>
@@ -86,23 +103,25 @@ export default function LandingPage(props) {
                 title.
               </h4>
               <br />
-              <Button
-                color="primary"
-                size="lg"
-                href="#about-me"
-                rel="noopener noreferrer"
-                className={css(cssButtonHeader)}
-              >
-                A propos de moi
-              </Button>
+              <div className={'button-aboutMe'}>
+                <Button
+                  color="primary"
+                  size="lg"
+                  href="#about-me"
+                  rel="noopener noreferrer"
+                  className={css(cssButtonHeader)}
+                >
+                  A propos de moi
+                </Button>
+              </div>
             </GridItem>
           </GridContainer>
         </div>
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <AboutMe />
-          <ProductSection />
+          <AboutMe isDisplayed={isDisplayed} ref={refAboutMe}/>
+          <Projects />
           <WorkSection />
         </div>
       </div>
@@ -112,12 +131,12 @@ export default function LandingPage(props) {
 }
 
 const cssLeftItem = (isDisplayed) => ({
-  position: 'relative',
   marginBottom: '200px',
   opacity: isDisplayed ? 1 : 0,
   '& .button-projects': {
     transform: isDisplayed ? 'translateX(0)' : 'translateX(-100vw)',
     transition: isDisplayed ? 'all 1.3s ease-in-out 0.5s' : 'none',
+    position: 'relative',
   }
 })
 
@@ -126,32 +145,29 @@ const cssRightItem = (isDisplayed) => ({
   marginTop: '200px',
   paddingLeft: '170px',
   opacity: isDisplayed ? 1 : 0,
-  transform: isDisplayed ? 'translateX(0)' : 'translateY(100vh)',
-  transition: isDisplayed ? 'all 2s ease-out 1s' : 'none',
+  '& h1': {
+    transform: isDisplayed ? 'translateX(0)' : 'translateY(100vh)',
+    transition: isDisplayed ? 'all 0.7s ease-out 1.5s' : 'none',
+  },
+  '& h4': {
+    transform: isDisplayed ? 'translateX(0)' : 'translateY(100vh)',
+    transition: isDisplayed ? 'all 0.9s ease-out 1.7s' : 'none',
+  },
+  '& .button-aboutMe': {
+    transform: isDisplayed ? 'translateX(0)' : 'translateY(100vh)',
+    transition: isDisplayed ? 'all 1.15s ease-out 1.8s' : 'none',
+  }
+
 })
 
 const cssButtonHeader = {
   transition: 'all 0.3s ease-in-out',
+  fontFamily: 'Josefin',
   position: 'relative',
-  /* '&::before': {
-    content: '\'\'',
-    position: 'absolute',
-    top: 0,
-    left: '-5px',
-    bottom: '-5px',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#fff',
-    transition: 'all ease 0.3s',
-  }, */
+  borderRadius: '0',
   '&:hover': {
     transform: 'translateY(-5px) translateX(2px)',
-    backgroundColor: hoverColor,
-    color: blackColor,
-    '&::before': {
-      outlineBorderLeft: '5px solid #fff',
-    },
-
+    boxShadow: `-3px 3px 3px ${blackColor}`,
   }
 }
 

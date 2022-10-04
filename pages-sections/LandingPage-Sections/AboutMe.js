@@ -1,171 +1,114 @@
-import React from "react";
-// nodejs library that concatenates classes
-import classNames from "classnames";
+import React, { forwardRef } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import { css } from "goober";
 
 // @material-ui/icons
-
+import Chat from "@material-ui/icons/Chat";
+import VerifiedUser from "@material-ui/icons/VerifiedUser";
+import Fingerprint from "@material-ui/icons/Fingerprint";
 // core components
 import GridContainer from "/components/Grid/GridContainer.js";
 import GridItem from "/components/Grid/GridItem.js";
-import Button from "/components/CustomButtons/Button.js";
-import Card from "/components/Card/Card.js";
-import CardBody from "/components/Card/CardBody.js";
-import CardFooter from "/components/Card/CardFooter.js";
+import InfoArea from "/components/InfoArea/InfoArea.js";
 
-import styles from "/styles/jss/nextjs-material-kit/pages/landingPageSections/teamStyle.js";
+import styles from "/styles/jss/nextjs-material-kit/pages/landingPageSections/productStyle.js";
 
 const useStyles = makeStyles(styles);
 
-export default function AboutMe() {
+const AboutMe = forwardRef(({isDisplayed}, ref) => {
   const classes = useStyles();
-  const imageClasses = classNames(
-    classes.imgRaised,
-    classes.imgRoundedCircle,
-    classes.imgFluid
-  );
   return (
-    <div className={classes.section} id="about-me">
-      <h2 className={classes.title}>Here is our team</h2>
+    <div className={`${classes.section}`} ref={ref}>
+      <GridContainer justify="center" className={`${css({marginBottom: '50px'})}`}>
+        <GridItem xs={12} sm={12}>
+          <h2 className={`${classes.title} ${css(cssTitleAboutMe(isDisplayed))}`}>Welcome ... !</h2>
+          <div className={css(cssAboutMeContainer)}>
+            <div className={`${classes.description} ${css({justifyContent: 'space-between', width: '47%'})}`}>
+              <p>
+                This is the paragraph where you can write more details about your
+                product. Keep you user engaged by providing meaningful information.
+                Remember that by this time, the user is curious, otherwise he wouldn
+                {"'"}t scroll to get here. Add a button if you want the user to see
+                more.
+              </p>
+              <p>
+                This is the paragraph where you can write more details about your
+                  product. Keep you user engaged by providing meaningful information.
+                  Remember that by this time, the user is curious, otherwise he wouldn
+                  {"'"}t scroll to get here. Add a button if you want the user to see
+                  more.
+              </p>
+            </div>
+            <div className={css(cssPhotoProfilContainer)}>
+              <img src={'/img/faces/marc.jpg'} alt={'Ma photo de profil'} />
+            </div>
+          </div>
+        </GridItem>
+      </GridContainer>
       <div>
         <GridContainer>
           <GridItem xs={12} sm={12} md={4}>
-            <Card plain>
-              <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
-                <img
-                  src="/img/faces/avatar.jpg"
-                  alt="..."
-                  className={imageClasses}
-                />
-              </GridItem>
-              <h4 className={classes.cardTitle}>
-                Gigi Hadid
-                <br />
-                <small className={classes.smallTitle}>Model</small>
-              </h4>
-              <CardBody>
-                <p className={classes.description}>
-                  You can write here details about one of your team members. You
-                  can give more details about what they do. Feel free to add
-                  some <a href="#pablo">links</a> for people to be able to
-                  follow them outside the site.
-                </p>
-              </CardBody>
-              <CardFooter className={classes.justifyCenter}>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-instagram"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-facebook"} />
-                </Button>
-              </CardFooter>
-            </Card>
+            <InfoArea
+              title="Free Chat"
+              description="Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough."
+              icon={Chat}
+              iconColor="info"
+              vertical
+            />
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>
-            <Card plain>
-              <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
-                <img
-                  src="/img/faces/christian.jpg"
-                  alt="..."
-                  className={imageClasses}
-                />
-              </GridItem>
-              <h4 className={classes.cardTitle}>
-                Christian Louboutin
-                <br />
-                <small className={classes.smallTitle}>Designer</small>
-              </h4>
-              <CardBody>
-                <p className={classes.description}>
-                  You can write here details about one of your team members. You
-                  can give more details about what they do. Feel free to add
-                  some <a href="#pablo">links</a> for people to be able to
-                  follow them outside the site.
-                </p>
-              </CardBody>
-              <CardFooter className={classes.justifyCenter}>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-linkedin"} />
-                </Button>
-              </CardFooter>
-            </Card>
+            <InfoArea
+              title="Verified Users"
+              description="Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough."
+              icon={VerifiedUser}
+              iconColor="success"
+              vertical
+            />
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>
-            <Card plain>
-              <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
-                <img
-                  src="/img/faces/kendall.jpg"
-                  alt="..."
-                  className={imageClasses}
-                />
-              </GridItem>
-              <h4 className={classes.cardTitle}>
-                Kendall Jenner
-                <br />
-                <small className={classes.smallTitle}>Model</small>
-              </h4>
-              <CardBody>
-                <p className={classes.description}>
-                  You can write here details about one of your team members. You
-                  can give more details about what they do. Feel free to add
-                  some <a href="#pablo">links</a> for people to be able to
-                  follow them outside the site.
-                </p>
-              </CardBody>
-              <CardFooter className={classes.justifyCenter}>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-instagram"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-facebook"} />
-                </Button>
-              </CardFooter>
-            </Card>
+            <InfoArea
+              title="Fingerprint"
+              description="Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough."
+              icon={Fingerprint}
+              iconColor="danger"
+              vertical
+            />
           </GridItem>
         </GridContainer>
       </div>
     </div>
   );
+})
+
+const cssAboutMeContainer = {
+  display: 'flex',
+  flexDirection: 'row-reverse',
+  justifyContent: 'center',
+  gap: '50px',
+  width: '100%',
 }
+
+const cssTitleAboutMe = (isDisplayed) => ({
+  marginBottom: '50px', 
+  marginTop: 0,
+  opacity: isDisplayed ? 1 : 0,
+  transform: isDisplayed ? 'scale(1)' : 'scale(2.5)',
+  transition: isDisplayed ? 'all 1.5s ease-in-out 1.5s' : 'none',
+})
+
+const cssTextAboutMe = {
+  display: 'flex',
+  alignItems: 'center',
+}
+
+const cssPhotoProfilContainer = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  'img': {
+    width: '50%',
+  }
+}
+
+export default AboutMe
